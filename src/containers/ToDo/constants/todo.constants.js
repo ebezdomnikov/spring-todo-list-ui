@@ -1,0 +1,28 @@
+export const TODO_SET_DONE = 'TODO_SET_DONE';
+export const TODO_SET_UN_DONE = 'TODO_SET_UN_DONE';
+export const TODO_SET_FAVORITE = 'TODO_SET_FAVORITE';
+export const TODO_SET_UN_FAVORITE = 'TODO_SET_UN_FAVORITE';
+
+export const TODO_EDIT_MODE = 'TODO_EDIT_MODE';
+export const TODO_VIEW_MODE = 'TODO_VIEW_MODE';
+export const TODO_SELECT = 'TODO_SELECT';
+export const TODO_SET_TEXT = 'TODO_SET_TEXT';
+export const TODO_SAVE_TEXT = 'TODO_SAVE_TEXT';
+
+export const TODO_SET_ITEMS = 'TODO_SET_ITEMS';
+
+export const TODO_INIT = 'TODO_INIT';
+
+export default {
+    TODO_SET_DONE,
+    TODO_SET_UN_DONE,
+    TODO_SET_FAVORITE,
+    TODO_SET_UN_FAVORITE,
+    TODO_INIT,
+    TODO_SET_ITEMS,
+    TODO_EDIT_MODE,
+    TODO_VIEW_MODE,
+    TODO_SELECT,
+    TODO_SET_TEXT,
+    TODO_SAVE_TEXT,
+};
