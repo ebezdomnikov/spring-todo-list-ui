@@ -1,0 +1,22 @@
+branch-defaults:
+  master:
+    environment: todo-ui-production
+environment-defaults:
+  todo-ui-production:
+    branch: null
+    repository: null
+deploy:
+  artifact: target/*.*
+global:
+  application_name: todo-ui
+  default_ec2_keyname: null
+  default_platform: arn:aws:elasticbeanstalk:eu-central-1::platform/Docker running
+    on 64bit Amazon Linux/2.12.9
+  default_region: eu-central-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  sc: git
+  workspace_type: Application
