@@ -13,6 +13,7 @@ build:
       - build/*.*
 
 development:
+  image: meixnertobias/dockerpipawscli:latest
   stage: deploy
   script:
     - mkdir ~/.aws/
