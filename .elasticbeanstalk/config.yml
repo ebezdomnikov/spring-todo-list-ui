@@ -6,7 +6,7 @@ environment-defaults:
     branch: null
     repository: null
 deploy:
-  artifact: target/*.*
+  artifact: build/*.*
 global:
   application_name: todo-ui
   default_ec2_keyname: null
