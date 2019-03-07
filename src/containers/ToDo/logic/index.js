@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import C from '../constants/todo.constants';
 import A from '../actions';
 import ToDoService from "../services/ToDoService";
-import {getEditId, getList} from "../utils/getters";
+import {getList} from "../utils/getters";
 
 const service = new ToDoService();
 
