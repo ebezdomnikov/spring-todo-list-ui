@@ -1,15 +1,18 @@
 import * as React from "react";
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
+import classNames from "classnames";
 import IconFavorite from "@material-ui/icons/Favorite";
 import IconUnFavorite from "@material-ui/icons/FavoriteBorder";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import {TaskComponentProps} from '../types';
 import {withStyles} from "@material-ui/core";
-import {MouseEventHandler} from "react";
-import {EventHandler} from "react";
+import isFunction from "lodash/isFunction";
+import ConfirmDialog from "./ConfirmDialog";
 
 const stylesContainer = {
     minHeight: "48px",
@@ -20,6 +23,9 @@ const stylesContainer = {
 };
 
 const styles = {
+    deleting: {
+        backgroundColor: "red",
+    },
     container: stylesContainer,
     containerSelected: {
         ...stylesContainer,
@@ -41,8 +47,13 @@ class Task extends React.Component<TaskComponentProps, any> {
     constructor(props: TaskComponentProps) {
         super(props);
         this.state = {
+            confirmDialogOpen: false,
             done: props.done,
             favorite: props.favorite,
+            menuE1: null,
+            clientX: null,
+            clientY: null,
+            focused: false,
         };
     }
 
@@ -53,6 +64,7 @@ class Task extends React.Component<TaskComponentProps, any> {
 
     _handlerChange = (e: React.ChangeEvent) => {
         const newValue = !this.state.done;
+        e.persist();
         this.setState({
             done: newValue,
         }, () => {
@@ -71,6 +83,19 @@ class Task extends React.Component<TaskComponentProps, any> {
         this.props.onTaskClick(e, this.props.id);
         e.stopPropagation();
     };
+
+    _handleMouseEnter = () => {
+        this.setState({
+            focused: true,
+        })
+    };
+
+    _handleMouseLeave = () => {
+        this.setState({
+            focused: false,
+        })
+    };
+
 
     _handlerChangeFavorite = (e: React.MouseEvent) => {
         const newValue = !this.state.favorite;
@@ -107,29 +132,79 @@ class Task extends React.Component<TaskComponentProps, any> {
         e.stopPropagation();
     };
 
+    _handleMouseUp = (event: React.MouseEvent) => {
+        if (event.button === 2) {
+            this.setState({
+                menuE1: event.currentTarget,
+                clientX: event.clientX,
+                clientY: event.clientY,
+            })
+        }
+        event.stopPropagation();
+    };
+
+    _handleClose = () => {
+        this.setState({
+            menuE1: null,
+            clientX: null,
+            clientY: null,
+        });
+    };
+
+    _handleDeleteClick = (event: React.MouseEvent) => {
+        event.persist();
+        this.setState({
+            menuE1: null,
+            clientX: null,
+            clientY: null,
+            confirmDialogOpen: true,
+        });
+
+        event.stopPropagation();
+    };
+
+    _handleConfirmDelete = (event: React.MouseEvent) => {
+        const {id, onDeleteClick} = this.props;
+        this.setState({
+            confirmDialogOpen: false,
+        }, () => {
+            isFunction(onDeleteClick) && onDeleteClick(event, id);
+        });
+    };
+
+    _handleRejectDelete = (event: React.MouseEvent) => {
+        this.setState({
+            confirmDialogOpen: false,
+        });
+    };
 
     render() {
         const {text, classes, favorite, edit, selected} = this.props;
-        const {done} = this.state;
+        const {done, menuE1, clientX, clientY, confirmDialogOpen, focused} = this.state;
+        const className = classNames(selected?classes.containerSelected:classes.container, (focused && Boolean(menuE1)) && classes.deleting)
         return <>
             <ClickAwayListener onClickAway={this._handlerOnClickAway}>
                 <Grid container
-                      className={selected?classes.containerSelected:classes.container}
+                      className={className}
                       component={Paper}
                       justify="flex-start"
                       wrap="nowrap"
+                      onMouseEnter={this._handleMouseEnter}
+                      onMouseLeave={this._handleMouseLeave}
+                      onMouseUp={this._handleMouseUp}
+                      onContextMenu={(e) => {e.preventDefault();}}
                       onDoubleClick={this._handlerOnDoubleClick}
                       onClick={this._handleClick}
                 >
-                    <div>
+                    <div onMouseUp={this._handleMouseUp}>
                         <Checkbox onChange={this._handlerChange} checked={done}/>
                     </div>
-                    <div className={classes.text}>
+                    <div onMouseUp={this._handleMouseUp} className={classes.text}>
                         {edit ? <TextField onKeyPress={this._handlerOnKeyPress} onChange={this._handlerTextChange} value={text}/>
                             : text
                         }
                     </div>
-                    <div className={classes.favorite}>
+                    <div onMouseUp={this._handleMouseUp} className={classes.favorite}>
                         {favorite
                             ? <IconFavorite onClick={this._handlerChangeFavorite} />
                             : <IconUnFavorite onClick={this._handlerChangeFavorite} />
@@ -137,6 +212,24 @@ class Task extends React.Component<TaskComponentProps, any> {
                     </div>
                 </Grid>
             </ClickAwayListener>
+            <ConfirmDialog
+                open={confirmDialogOpen}
+                title={'Confirmation'}
+                content={'Do you want to remove it?'}
+                onConfirm={this._handleConfirmDelete}
+                onReject={this._handleRejectDelete}
+            />
+            <Menu
+                onClose={this._handleClose}
+                anchorReference="anchorPosition"
+                anchorPosition={{
+                    left: clientX,
+                    top: clientY,
+                }}
+                open={Boolean(menuE1)}
+            >
+                <MenuItem onClick={this._handleDeleteClick}>Delete</MenuItem>
+            </Menu>
         </>;
     }
 }

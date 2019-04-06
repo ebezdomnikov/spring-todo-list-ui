@@ -3,11 +3,11 @@ import get from "lodash/get";
 import {getEditId,getSelectedId,getList,getRoot} from '../../utils/getters';
 import {bindActionCreators} from "redux";
 import {default as actions} from "../../actions";
-import {TaskType} from "../../types";
+import {DefaultTaskType, TaskType} from "../../types";
 
 const mapStateToProps = (state: Object, ownProps: any): Object => {
     const list = getList(state);
-    const task: TaskType = get(list, [ownProps.id], {});
+    const task: TaskType = get(list, [ownProps.id], DefaultTaskType);
     return {
         text: get(task, 'text' ,''),
         done: get(task, 'done' ,''),

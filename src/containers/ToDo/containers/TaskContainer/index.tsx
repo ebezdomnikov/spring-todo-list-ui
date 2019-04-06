@@ -63,6 +63,15 @@ class TaskContainer extends React.Component<TaskContainerProps> {
         e.stopPropagation();
     };
 
+    _handleOnTaskDelete = (e: MouseEvent, taskId: string) => {
+        const {actions, id} = this.props;
+        if (taskId === id) {
+            actions.todoDelete({id: taskId});
+        }
+        e.stopPropagation();
+    }
+
+
     render(): any {
         const {id, selected, edit, text, done, favorite} = this.props;
 
@@ -70,6 +79,7 @@ class TaskContainer extends React.Component<TaskContainerProps> {
                 key={id}
                 selected={selected}
                 edit={edit}
+                onDeleteClick={this._handleOnTaskDelete}
                 onSaveTextRequest={this._handleOnSaveTextRequest}
                 onDoubleClick={this._handleOnDoubleClick}
                 onTextChange={this._handleOnTextChange}

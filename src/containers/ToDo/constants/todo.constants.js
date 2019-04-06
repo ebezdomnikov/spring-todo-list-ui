@@ -12,6 +12,7 @@ export const TODO_SAVE_TEXT = 'TODO_SAVE_TEXT';
 export const TODO_SET_ITEMS = 'TODO_SET_ITEMS';
 
 export const TODO_INIT = 'TODO_INIT';
+export const TODO_DELETE = 'TODO_DELETE';
 
 export default {
     TODO_SET_DONE,
@@ -25,4 +26,5 @@ export default {
     TODO_SELECT,
     TODO_SET_TEXT,
     TODO_SAVE_TEXT,
+    TODO_DELETE,
 };

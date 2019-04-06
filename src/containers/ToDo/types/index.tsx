@@ -8,10 +8,18 @@ export interface TaskType {
     favorite: boolean,
 }
 
+export const DefaultTaskType: TaskType = {
+    id: "",
+    text: "",
+    done: false,
+    favorite: false,
+};
+
 export interface TaskComponentProps extends TaskType {
     classes: any,
     edit: boolean,
     selected: boolean,
+    onDeleteClick: Function,
     onSaveTextRequest: Function,
     onDoubleClick: Function,
     onTextChange: Function,
@@ -22,13 +30,17 @@ export interface TaskComponentProps extends TaskType {
     onTaskUnFavorite: Function,
 }
 
-export interface TaskListComponentProps {
-    children: Readonly<Array<TaskComponentProps>>,
+export interface TaskListComponentProps {}
+
+export interface MainContainerProps {
+    hasDoneItems: boolean,
+    hasUnDoneItems: boolean,
+    actions: IToDoActions,
 }
 
 export interface TaskListContainerProps extends TaskListComponentProps {
-    list: Array<TaskType>,
-    actions: IToDoActions,
+    list?: Array<TaskType>,
+    actions?: IToDoActions,
 }
 
 export interface IToDoActions {
@@ -40,6 +52,7 @@ export interface IToDoActions {
     todoSetItems: Function,
     todoEditMode: Function,
     todoViewMode: Function,
+    todoDelete: Function,
     todoSelect: Function,
     todoSetText: Function,
     todoSaveText: Function,

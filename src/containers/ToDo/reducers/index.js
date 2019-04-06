@@ -1,3 +1,4 @@
+import omit from "lodash/omit";
 import {createReducer} from "../../../utils";
 import * as Enum from "../constants/enum";
 import C from "../constants/todo.constants";
@@ -92,6 +93,11 @@ const setText = (state, {payload: {id, text}}) => ({
     }
 });
 
+const todoDelete = (state, {payload: {id}}) => ({
+    ...state,
+    [Enum.STATE_ITEMS]: omit(state[Enum.STATE_ITEMS], id)
+});
+
 const ToDoReducer = createReducer(initialState, {
     [C.TODO_SET_DONE]: setDone,
     [C.TODO_SET_UN_DONE]: setUnDone,
@@ -102,6 +108,7 @@ const ToDoReducer = createReducer(initialState, {
     [C.TODO_EDIT_MODE]: setEditMode,
     [C.TODO_SELECT]: setSelect,
     [C.TODO_SET_TEXT]: setText,
+    [C.TODO_DELETE]: todoDelete,
 });
 
 export default ToDoReducer;

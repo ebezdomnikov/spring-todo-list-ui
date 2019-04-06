@@ -1,20 +1,20 @@
 import React from 'react';
-import { UnDoneTaskListContainer } from "../containers/ToDo";
-import { DoneTaskListContainer } from "../containers/ToDo";
+import { MainContainer } from "../containers/ToDo";
+import logic from "../containers/ToDo/logic";
+import {STATE_NAME, default as reducer} from "../containers/ToDo/reducers";
+// import LogicRegistry from "../logic/logicRegistry";
+// import reducerRegistry from "../reducers/reducerRegistry";
+import withRegistry from "../store/withRegistry";
 
 class InboxSceneComponent extends React.Component {
+
     render() {
-        return <>
-            <div>
-                Not done list:
-                <UnDoneTaskListContainer />
-            </div>
-            <div>
-                done list:
-                <DoneTaskListContainer />
-            </div>
-        </>
+        return <MainContainer />;
     }
 }
 
-export default InboxSceneComponent;
+export default withRegistry({
+    logic,
+    reducerName: STATE_NAME,
+    reducer
+})(InboxSceneComponent);

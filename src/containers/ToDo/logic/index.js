@@ -17,10 +17,11 @@ const getAllData = createLogic({
                 response.data.data.forEach(e => {
                    data[e.id] = e;
                 });
-
                 dispatch(A.todoSetItems({items: data}));
+
             })
-            .finally(done);
+            .then(done)
+        ;
     }
 });
 
@@ -38,7 +39,8 @@ const setDone = createLogic({
 
                 dispatch(A.todoSetItems({items: data}));
             })
-            .finally(done);
+            .then(done)
+        ;
     }
 });
 
@@ -55,7 +57,8 @@ const setUnDone = createLogic({
 
                 dispatch(A.todoSetItems({items: data}));
             })
-            .finally(done);
+            .then(done)
+        ;
     }
 });
 
@@ -72,7 +75,8 @@ const setFavorite = createLogic({
 
                 dispatch(A.todoSetItems({items: data}));
             })
-            .finally(done);
+            .then(done)
+        ;
     }
 });
 const setUnFavorite = createLogic({
@@ -88,7 +92,8 @@ const setUnFavorite = createLogic({
 
                 dispatch(A.todoSetItems({items: data}));
             })
-            .finally(done);
+            .then(done)
+        ;
     }
 });
 
@@ -106,12 +111,22 @@ const updateTextLogic = createLogic({
                 response.data.data.forEach(e => {
                     data[e.id] = e;
                 });
-
                 dispatch(A.todoSetItems({items: data}));
             })
-            .finally(done);
+            .then(done);
     }
 });
+
+const deleteTodoLogic = createLogic({
+    type: C.TODO_DELETE,
+    process({getState, action}, dispatch, done) {
+        const id = action.payload.id;
+        service
+            .delete(id)
+            .then(done);
+    }
+});
+
 export default [
     getAllData,
     setDone,
@@ -119,4 +134,5 @@ export default [
     setFavorite,
     setUnFavorite,
     updateTextLogic,
+    deleteTodoLogic,
 ]

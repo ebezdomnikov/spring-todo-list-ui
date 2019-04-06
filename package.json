@@ -7,6 +7,7 @@
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
     "@svgr/webpack": "4.1.0",
+    "@types/classnames": "^2.2.7",
     "@types/jest": "^24.0.5",
     "@types/lodash": "^4.14.121",
     "@types/node": "^11.9.4",
@@ -79,6 +80,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "deploy": "/usr/local/bin/aws s3 sync build/ s3://todo-ui2",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

@@ -155,11 +155,17 @@ class Layout extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        <ListItem button key={'Inbox'}>
+                        <ListItem button key={'Inbox'} onClick={this.navigateTo('/inbox')}>
                             <ListItemIcon>
-                                <InboxIcon onClick={this.navigateTo('/inbox')}/>
+                                <InboxIcon />
                             </ListItemIcon>
                             <ListItemText primary={'Inbox'} />
+                        </ListItem>
+                        <ListItem button key={'Inbox1'} onClick={this.navigateTo('/inbox1')}>
+                            <ListItemIcon>
+                                <InboxIcon/>
+                            </ListItemIcon>
+                            <ListItemText primary={'Inbox1'} />
                         </ListItem>
                     </List>
                     <Divider />
@@ -175,7 +181,12 @@ class Layout extends React.Component {
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
                     <Typography paragraph>
-                        <Route exact path="/inbox" component={InboxSceneComponent}/>
+                        <Route exact path="/inbox" component={InboxSceneComponent} />
+                        <Route exact path="/inbox2" render={() => {
+                            return <>
+                                <div>Dummy page</div>
+                            </>
+                        }} />
                     </Typography>
                 </main>
             </div>

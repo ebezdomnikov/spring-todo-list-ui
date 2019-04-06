@@ -7,27 +7,31 @@ interface ToDoServiceResponse {
 
 class ToDoService extends BaseService<ToDoServiceResponse> {
     getAll() {
-        return this._get('http://localhost:8080/todos');
+        return this._get('todos');
     }
 
     done(id: string) {
-        return this._patch(`http://localhost:8080/todos/done/${id}`, {})
+        return this._patch(`todos/done/${id}`, {})
     }
 
     undone(id: string) {
-        return this._patch(`http://localhost:8080/todos/undone/${id}`, {})
+        return this._patch(`todos/undone/${id}`, {})
     }
 
     favorite(id: string) {
-        return this._patch(`http://localhost:8080/todos/favorite/${id}`, {})
+        return this._patch(`todos/favorite/${id}`, {})
     }
 
     unfavorite(id: string) {
-        return this._patch(`http://localhost:8080/todos/unfavorite/${id}`, {})
+        return this._patch(`todos/unfavorite/${id}`, {})
     }
 
     updateText(id: string, text: string) {
-        return this._post(`http://localhost:8080/todos/${id}`, {text: text});
+        return this._post(`todos/${id}`, {text: text});
+    }
+
+    delete(id: string) {
+        return this._delete(`todos/${id}`);
     }
 }
 

@@ -19,6 +19,8 @@ const todoSelect: Function = makeActionCreator(C.TODO_SELECT, "payload");
 const todoSetText: Function = makeActionCreator(C.TODO_SET_TEXT, "payload");
 const todoSaveText: Function = makeActionCreator(C.TODO_SAVE_TEXT, "payload");
 
+const todoDelete: Function = makeActionCreator(C.TODO_DELETE, "payload");
+
 const actions: IToDoActions = {
     initTodoList,
     todoSetDone,
@@ -30,7 +32,8 @@ const actions: IToDoActions = {
     todoViewMode,
     todoSelect,
     todoSetText,
-    todoSaveText
+    todoSaveText,
+    todoDelete
 };
 
 export default actions;
