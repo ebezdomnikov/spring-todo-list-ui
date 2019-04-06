@@ -50,8 +50,8 @@ class Task extends React.Component<TaskComponentProps, any> {
             done: props.done,
             favorite: props.favorite,
             menuE1: null,
-            clientX: null,
-            clientY: null,
+            clientX: 0,
+            clientY: 0,
             focused: false,
         };
     }
