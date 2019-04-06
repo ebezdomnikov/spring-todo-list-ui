@@ -9,15 +9,15 @@ import TextField from "@material-ui/core/TextField";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import {TaskComponentProps} from '../types';
-import {withStyles} from "@material-ui/core";
+import { TaskComponentProps } from "../types";
+import { withStyles } from "@material-ui/core";
 import isFunction from "lodash/isFunction";
 import ConfirmDialog from "./ConfirmDialog";
 
 const stylesContainer = {
     minHeight: "48px",
     marginBottom: "5px",
-    '&:hover': {
+    "&:hover": {
         boxShadow: "0 0 10px rgba(0,0,0,0.5)",
     },
 };
@@ -43,7 +43,6 @@ const styles = {
 };
 
 class Task extends React.Component<TaskComponentProps, any> {
-
     constructor(props: TaskComponentProps) {
         super(props);
         this.state = {
@@ -65,17 +64,20 @@ class Task extends React.Component<TaskComponentProps, any> {
     _handlerChange = (e: React.ChangeEvent) => {
         const newValue = !this.state.done;
         e.persist();
-        this.setState({
-            done: newValue,
-        }, () => {
-            setTimeout(() => {
-                if (newValue) {
-                    this.props.onTaskDone(e, this.props.id)
-                } else {
-                    this.props.onTaskUnDone(e, this.props.id)
-                }
-            }, 200);
-        });
+        this.setState(
+            {
+                done: newValue,
+            },
+            () => {
+                setTimeout(() => {
+                    if (newValue) {
+                        this.props.onTaskDone(e, this.props.id);
+                    } else {
+                        this.props.onTaskUnDone(e, this.props.id);
+                    }
+                }, 200);
+            }
+        );
         e.stopPropagation();
     };
 
@@ -87,29 +89,31 @@ class Task extends React.Component<TaskComponentProps, any> {
     _handleMouseEnter = () => {
         this.setState({
             focused: true,
-        })
+        });
     };
 
     _handleMouseLeave = () => {
         this.setState({
             focused: false,
-        })
+        });
     };
-
 
     _handlerChangeFavorite = (e: React.MouseEvent) => {
         const newValue = !this.state.favorite;
-        this.setState({
-            favorite: newValue,
-        }, () => {
-            setTimeout(() => {
-                if (newValue) {
-                    this.props.onTaskFavorite(e, this.props.id)
-                } else {
-                    this.props.onTaskUnFavorite(e, this.props.id)
-                }
-            }, 200);
-        });
+        this.setState(
+            {
+                favorite: newValue,
+            },
+            () => {
+                setTimeout(() => {
+                    if (newValue) {
+                        this.props.onTaskFavorite(e, this.props.id);
+                    } else {
+                        this.props.onTaskUnFavorite(e, this.props.id);
+                    }
+                }, 200);
+            }
+        );
         e.stopPropagation();
     };
 
@@ -119,7 +123,7 @@ class Task extends React.Component<TaskComponentProps, any> {
     };
 
     _handlerOnKeyPress = (e: React.KeyboardEvent) => {
-        if (e.keyCode === 13 || e.key === 'Enter') {
+        if (e.keyCode === 13 || e.key === "Enter") {
             this.props.onSaveTextRequest(e, this.props.id);
         }
         e.stopPropagation();
@@ -138,7 +142,7 @@ class Task extends React.Component<TaskComponentProps, any> {
                 menuE1: event.currentTarget,
                 clientX: event.clientX,
                 clientY: event.clientY,
-            })
+            });
         }
         event.stopPropagation();
     };
@@ -164,12 +168,15 @@ class Task extends React.Component<TaskComponentProps, any> {
     };
 
     _handleConfirmDelete = (event: React.MouseEvent) => {
-        const {id, onDeleteClick} = this.props;
-        this.setState({
-            confirmDialogOpen: false,
-        }, () => {
-            isFunction(onDeleteClick) && onDeleteClick(event, id);
-        });
+        const { id, onDeleteClick } = this.props;
+        this.setState(
+            {
+                confirmDialogOpen: false,
+            },
+            () => {
+                isFunction(onDeleteClick) && onDeleteClick(event, id);
+            }
+        );
     };
 
     _handleRejectDelete = (event: React.MouseEvent) => {
@@ -179,60 +186,97 @@ class Task extends React.Component<TaskComponentProps, any> {
     };
 
     render() {
-        const {text, classes, favorite, edit, selected} = this.props;
-        const {done, menuE1, clientX, clientY, confirmDialogOpen, focused} = this.state;
-        const className = classNames(selected?classes.containerSelected:classes.container, (focused && Boolean(menuE1)) && classes.deleting)
-        return <>
-            <ClickAwayListener onClickAway={this._handlerOnClickAway}>
-                <Grid container
-                      className={className}
-                      component={Paper}
-                      justify="flex-start"
-                      wrap="nowrap"
-                      onMouseEnter={this._handleMouseEnter}
-                      onMouseLeave={this._handleMouseLeave}
-                      onMouseUp={this._handleMouseUp}
-                      onContextMenu={(e) => {e.preventDefault();}}
-                      onDoubleClick={this._handlerOnDoubleClick}
-                      onClick={this._handleClick}
+        const { text, classes, favorite, edit, selected } = this.props;
+        const {
+            done,
+            menuE1,
+            clientX,
+            clientY,
+            confirmDialogOpen,
+            focused,
+        } = this.state;
+        const className = classNames(
+            selected ? classes.containerSelected : classes.container,
+            focused && Boolean(menuE1) && classes.deleting
+        );
+
+        return (
+            <>
+                <ClickAwayListener onClickAway={this._handlerOnClickAway}>
+                    <Grid
+                        container
+                        className={className}
+                        component={Paper}
+                        justify="flex-start"
+                        wrap="nowrap"
+                        onMouseEnter={this._handleMouseEnter}
+                        onMouseLeave={this._handleMouseLeave}
+                        onMouseUp={this._handleMouseUp}
+                        onContextMenu={e => {
+                            e.preventDefault();
+                        }}
+                        onDoubleClick={this._handlerOnDoubleClick}
+                        onClick={this._handleClick}
+                    >
+                        <div onMouseUp={this._handleMouseUp}>
+                            <Checkbox
+                                onChange={this._handlerChange}
+                                checked={done}
+                            />
+                        </div>
+                        <div
+                            onMouseUp={this._handleMouseUp}
+                            className={classes.text}
+                        >
+                            {edit ? (
+                                <TextField
+                                    onKeyPress={this._handlerOnKeyPress}
+                                    onChange={this._handlerTextChange}
+                                    value={text}
+                                />
+                            ) : (
+                                text
+                            )}
+                        </div>
+                        <div
+                            onMouseUp={this._handleMouseUp}
+                            className={classes.favorite}
+                        >
+                            {favorite ? (
+                                <IconFavorite
+                                    onClick={this._handlerChangeFavorite}
+                                />
+                            ) : (
+                                <IconUnFavorite
+                                    onClick={this._handlerChangeFavorite}
+                                />
+                            )}
+                        </div>
+                    </Grid>
+                </ClickAwayListener>
+                <ConfirmDialog
+                    open={confirmDialogOpen}
+                    title={"Confirmation"}
+                    content={"Do you want to remove it?"}
+                    onConfirm={this._handleConfirmDelete}
+                    onReject={this._handleRejectDelete}
+                />
+                <Menu
+                    onClose={this._handleClose}
+                    anchorReference="anchorPosition"
+                    anchorPosition={{
+                        left: clientX,
+                        top: clientY,
+                    }}
+                    open={Boolean(menuE1)}
                 >
-                    <div onMouseUp={this._handleMouseUp}>
-                        <Checkbox onChange={this._handlerChange} checked={done}/>
-                    </div>
-                    <div onMouseUp={this._handleMouseUp} className={classes.text}>
-                        {edit ? <TextField onKeyPress={this._handlerOnKeyPress} onChange={this._handlerTextChange} value={text}/>
-                            : text
-                        }
-                    </div>
-                    <div onMouseUp={this._handleMouseUp} className={classes.favorite}>
-                        {favorite
-                            ? <IconFavorite onClick={this._handlerChangeFavorite} />
-                            : <IconUnFavorite onClick={this._handlerChangeFavorite} />
-                        }
-                    </div>
-                </Grid>
-            </ClickAwayListener>
-            <ConfirmDialog
-                open={confirmDialogOpen}
-                title={'Confirmation'}
-                content={'Do you want to remove it?'}
-                onConfirm={this._handleConfirmDelete}
-                onReject={this._handleRejectDelete}
-            />
-            <Menu
-                onClose={this._handleClose}
-                anchorReference="anchorPosition"
-                anchorPosition={{
-                    left: clientX,
-                    top: clientY,
-                }}
-                open={Boolean(menuE1)}
-            >
-                <MenuItem onClick={this._handleDeleteClick}>Delete</MenuItem>
-            </Menu>
-        </>;
+                    <MenuItem onClick={this._handleDeleteClick}>
+                        Delete
+                    </MenuItem>
+                </Menu>
+            </>
+        );
     }
 }
-
 
 export default withStyles(styles as any)(Task);

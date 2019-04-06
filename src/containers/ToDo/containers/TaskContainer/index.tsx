@@ -1,22 +1,21 @@
-import React from 'react';
+import React from "react";
 import get from "lodash/get";
 
 import Task from "../../components/Task";
 import connect from "./connect";
 
-import {IToDoActions, TaskType} from "../../types";
+import { IToDoActions, TaskType } from "../../types";
 
 interface TaskContainerProps extends TaskType {
-    actions: IToDoActions,
-    selected: boolean
-    edit: boolean
+    actions: IToDoActions;
+    selected: boolean;
+    edit: boolean;
 }
 
 class TaskContainer extends React.Component<TaskContainerProps> {
-
     _handleOnTextChange = (e: KeyboardEvent, taskId: string) => {
-        const {actions} = this.props;
-        actions.todoSetText({id: taskId, text: get(e, 'target.value', "")});
+        const { actions } = this.props;
+        actions.todoSetText({ id: taskId, text: get(e, "target.value", "") });
         e.stopPropagation();
     };
 
@@ -25,57 +24,61 @@ class TaskContainer extends React.Component<TaskContainerProps> {
     };
 
     _handleOnTaskUnDone = (e: MouseEvent, taskId: string) => {
-        const {actions} = this.props;
-        actions.todoSetUnDone({id: taskId});
+        const { actions } = this.props;
+        actions.todoSetUnDone({ id: taskId });
         e.stopPropagation();
     };
 
     _handleOnTaskDone = (e: MouseEvent, taskId: string) => {
-        const {actions} = this.props;
-        actions.todoSetDone({id: taskId});
+        const { actions } = this.props;
+        actions.todoSetDone({ id: taskId });
         e.stopPropagation();
     };
 
     _handleOnTaskFavorite = (e: MouseEvent, taskId: string) => {
-        const {actions} = this.props;
-        actions.todoSetFavorite({id: taskId});
+        const { actions } = this.props;
+        actions.todoSetFavorite({ id: taskId });
         e.stopPropagation();
     };
 
     _handleOnTaskUnFavorite = (e: MouseEvent, taskId: string) => {
-        const {actions} = this.props;
-        actions.todoSetUnFavorite({id: taskId});
+        const { actions } = this.props;
+        actions.todoSetUnFavorite({ id: taskId });
         e.stopPropagation();
     };
 
     _handleOnDoubleClick = (e: MouseEvent, taskId: string) => {
-        const {actions} = this.props;
-        actions.todoEditMode({id: taskId});
+        const { actions } = this.props;
+        actions.todoEditMode({ id: taskId });
         e.stopPropagation();
     };
 
-    _handleOnSaveTextRequest = (e: MouseEvent, taskId: string, text: string) => {
-        const {actions, id} = this.props;
+    _handleOnSaveTextRequest = (
+        e: MouseEvent,
+        taskId: string,
+        text: string
+    ) => {
+        const { actions, id } = this.props;
         if (taskId === id) {
-            actions.todoSaveText({id: taskId, text});
-            actions.todoViewMode({id: taskId});
+            actions.todoSaveText({ id: taskId, text });
+            actions.todoViewMode({ id: taskId });
         }
+
         e.stopPropagation();
     };
 
     _handleOnTaskDelete = (e: MouseEvent, taskId: string) => {
-        const {actions, id} = this.props;
+        const { actions, id } = this.props;
         if (taskId === id) {
-            actions.todoDelete({id: taskId});
+            actions.todoDelete({ id: taskId });
         }
-        e.stopPropagation();
-    }
-
+    };
 
     render(): any {
-        const {id, selected, edit, text, done, favorite} = this.props;
+        const { id, selected, edit, text, done, favorite } = this.props;
 
-        return <Task
+        return (
+            <Task
                 key={id}
                 selected={selected}
                 edit={edit}
@@ -92,8 +95,9 @@ class TaskContainer extends React.Component<TaskContainerProps> {
                 text={text}
                 done={done}
                 favorite={favorite}
-        />
+            />
+        );
     }
 }
 
-export default connect(TaskContainer)
+export default connect(TaskContainer);

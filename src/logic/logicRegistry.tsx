@@ -1,10 +1,6 @@
+interface LogicRegistryInterface {}
 
-interface LogicRegistryInterface {
-
-}
-
-class LogicRegistry implements LogicRegistryInterface
-{
+class LogicRegistry implements LogicRegistryInterface {
     static subscribe: any;
     static unsubscribe: any;
 

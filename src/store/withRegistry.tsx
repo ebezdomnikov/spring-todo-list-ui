@@ -1,8 +1,8 @@
-import React from 'react';
-import isObject from 'lodash/isObject';
-import isArray from 'lodash/isArray';
-import {default as LogicRegistry} from "../logic/logicRegistry";
-import {default as ReducerRegistry} from "../reducers/reducerRegistry";
+import React from "react";
+import isObject from "lodash/isObject";
+import isArray from "lodash/isArray";
+import { default as LogicRegistry } from "../logic/logicRegistry";
+import { default as ReducerRegistry } from "../reducers/reducerRegistry";
 
 /**
  * HOC to register logics and reducers to use them by demand. Main idea,
@@ -18,32 +18,35 @@ import {default as ReducerRegistry} from "../reducers/reducerRegistry";
  */
 
 interface IRegistry {
-    logic?: Array<any>,
-    reducerName?: string,
-    reducer?: Function,
-    reducers?: any,
+    logic?: Array<any>;
+    reducerName?: string;
+    reducer?: Function;
+    reducers?: any;
 }
 
 const withRegistry = ({
-                          logic = undefined,
-                          reducerName = undefined,
-                          reducer = undefined,
-                          reducers = undefined,
-                      }: IRegistry) => (Component: React.ReactNode) => {
-
+    logic = undefined,
+    reducerName = undefined,
+    reducer = undefined,
+    reducers = undefined,
+}: IRegistry) => (Component: React.ReactNode) => {
     const WrappedComponent = class Wrapper extends React.Component {
-
         componentWillMount() {
             console.log(this.props);
             if (reducers !== undefined) {
                 if (!isObject(reducers)) {
-                    throw new Error('Please provide reducers as key => value object.');
+                    throw new Error(
+                        "Please provide reducers as key => value object."
+                    );
                 }
                 const _reducers = Object.keys(reducers);
                 // eslint-disable-next-line
-                _reducers.forEach((key: string): void => {
-                    ReducerRegistry.register(key, reducers[key]);
-                });
+                _reducers.forEach(
+                    (key: string): void => {
+                        // @ts-ignore
+                        ReducerRegistry.register(key, reducers[key]);
+                    }
+                );
             } else {
                 if (reducerName !== undefined && reducer !== undefined) {
                     ReducerRegistry.register(reducerName, reducer);
@@ -52,7 +55,7 @@ const withRegistry = ({
 
             if (logic !== null) {
                 if (!isArray(logic)) {
-                    throw new Error('Please provide logic as an array.');
+                    throw new Error("Please provide logic as an array.");
                 }
 
                 LogicRegistry.register(logic);
@@ -62,7 +65,7 @@ const withRegistry = ({
         componentWillUnmount(): void {
             if (logic !== null) {
                 if (!isArray(logic)) {
-                    throw new Error('Please provide logic as an array.');
+                    throw new Error("Please provide logic as an array.");
                 }
 
                 LogicRegistry.unregister(logic);

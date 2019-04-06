@@ -17,14 +17,13 @@ export const createReducer = (initialState, handlers) => {
     };
 };
 
-
 /**
  * @param {String} type - action type
  * @param {...String} argNames - one or more names for additional action keys
  * @returns {function} a function that accepts action values for the keys
  */
 export const makeActionCreator = (type, ...argNames) => (...args) => {
-    let action = {type}; // action =  { type: type } e.g. { type: REFRESH_TICKET }
+    let action = { type }; // action =  { type: type } e.g. { type: REFRESH_TICKET }
     argNames.forEach((argName, index) => {
         action[argName] = args[index]; // for each argName assign arg value from (...args) e.g. action['ticketId'] = id;
     });

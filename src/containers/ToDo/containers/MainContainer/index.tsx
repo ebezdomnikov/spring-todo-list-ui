@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import UnDoneTaskListContainer from "../UnDoneTaskListContainer";
 import DoneTaskListContainer from "../DoneTaskListContainer";
 import connect from "./connect";
-import {MainContainerProps} from "../../types";
+import { MainContainerProps } from "../../types";
 
 class InboxSceneComponent extends React.Component<MainContainerProps> {
     componentDidMount(): void {
@@ -10,18 +10,23 @@ class InboxSceneComponent extends React.Component<MainContainerProps> {
     }
 
     render() {
-        const {hasDoneItems, hasUnDoneItems} = this.props;
-        console.log(this.props, this.context);
-        return <>
-            {hasUnDoneItems && <div>
-                Not done list:
-                <UnDoneTaskListContainer />
-            </div>}
-            {hasDoneItems && <div>
-                done list:
-                <DoneTaskListContainer />
-            </div>}
-        </>
+        const { hasDoneItems, hasUnDoneItems } = this.props;
+        return (
+            <>
+                {hasUnDoneItems && (
+                    <div>
+                        Not done list:
+                        <UnDoneTaskListContainer />
+                    </div>
+                )}
+                {hasDoneItems && (
+                    <div>
+                        done list:
+                        <DoneTaskListContainer />
+                    </div>
+                )}
+            </>
+        );
     }
 }
 

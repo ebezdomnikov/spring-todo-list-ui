@@ -8,7 +8,6 @@
  * @author Evgenii Bezdomnikov <evgenii.bezdomnikov@hemmersbach.com>
  */
 export class ReducerRegistry {
-
     _emitChange: any;
     _reducers: any;
 
@@ -25,7 +24,7 @@ export class ReducerRegistry {
     mergeReducersWith(_reducers: Object): void {
         this._reducers = {
             ...this._reducers,
-            ..._reducers
+            ..._reducers,
         };
     }
 
@@ -34,7 +33,7 @@ export class ReducerRegistry {
      * @return {Object}
      */
     getReducers(): Object {
-        return {...this._reducers};
+        return { ...this._reducers };
     }
 
     /**
@@ -43,8 +42,8 @@ export class ReducerRegistry {
      * @param reducer
      */
     register(name: string, reducer: Object): void {
-        this._reducers = {...this._reducers, [name]: reducer};
-        console.log("register:", name, reducer)
+        this._reducers = { ...this._reducers, [name]: reducer };
+        console.log("register:", name, reducer);
         if (this._emitChange) {
             this._emitChange(this.getReducers());
         }

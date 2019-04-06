@@ -1,11 +1,11 @@
-import axios, {AxiosPromise} from "axios";
+import axios, { AxiosPromise } from "axios";
 
 const env = process.env;
 
 class BaseService<T> {
-
     constructor() {
-        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        axios.defaults.headers.post["Content-Type"] =
+            "application/x-www-form-urlencoded";
     }
 
     __makeUrl = (path: string): string => {

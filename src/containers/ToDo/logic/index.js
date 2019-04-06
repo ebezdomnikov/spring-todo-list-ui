@@ -1,34 +1,31 @@
-import {createLogic} from "redux-logic";
-import get from 'lodash/get';
-import C from '../constants/todo.constants';
-import A from '../actions';
+import { createLogic } from "redux-logic";
+import get from "lodash/get";
+import C from "../constants/todo.constants";
+import A from "../actions";
 import ToDoService from "../services/ToDoService";
-import {getList} from "../utils/getters";
+import { getList } from "../utils/getters";
 
 const service = new ToDoService();
 
 const getAllData = createLogic({
     type: C.TODO_INIT,
-    process({getState, action}, dispatch, done) {
+    process({ getState, action }, dispatch, done) {
         service
             .getAll()
             .then(response => {
                 let data = {};
                 response.data.data.forEach(e => {
-                   data[e.id] = e;
+                    data[e.id] = e;
                 });
-                dispatch(A.todoSetItems({items: data}));
-
+                dispatch(A.todoSetItems({ items: data }));
             })
-            .then(done)
-        ;
-    }
+            .then(done);
+    },
 });
-
 
 const setDone = createLogic({
     type: C.TODO_SET_DONE,
-    process({getState, action}, dispatch, done) {
+    process({ getState, action }, dispatch, done) {
         service
             .done(action.payload.id)
             .then(response => {
@@ -37,16 +34,15 @@ const setDone = createLogic({
                     data[e.id] = e;
                 });
 
-                dispatch(A.todoSetItems({items: data}));
+                dispatch(A.todoSetItems({ items: data }));
             })
-            .then(done)
-        ;
-    }
+            .then(done);
+    },
 });
 
 const setUnDone = createLogic({
     type: C.TODO_SET_UN_DONE,
-    process({getState, action}, dispatch, done) {
+    process({ getState, action }, dispatch, done) {
         service
             .undone(action.payload.id)
             .then(response => {
@@ -55,16 +51,15 @@ const setUnDone = createLogic({
                     data[e.id] = e;
                 });
 
-                dispatch(A.todoSetItems({items: data}));
+                dispatch(A.todoSetItems({ items: data }));
             })
-            .then(done)
-        ;
-    }
+            .then(done);
+    },
 });
 
 const setFavorite = createLogic({
     type: C.TODO_SET_FAVORITE,
-    process({getState, action}, dispatch, done) {
+    process({ getState, action }, dispatch, done) {
         service
             .favorite(action.payload.id)
             .then(response => {
@@ -73,15 +68,14 @@ const setFavorite = createLogic({
                     data[e.id] = e;
                 });
 
-                dispatch(A.todoSetItems({items: data}));
+                dispatch(A.todoSetItems({ items: data }));
             })
-            .then(done)
-        ;
-    }
+            .then(done);
+    },
 });
 const setUnFavorite = createLogic({
     type: C.TODO_SET_UN_FAVORITE,
-    process({getState, action}, dispatch, done) {
+    process({ getState, action }, dispatch, done) {
         service
             .unfavorite(action.payload.id)
             .then(response => {
@@ -90,19 +84,18 @@ const setUnFavorite = createLogic({
                     data[e.id] = e;
                 });
 
-                dispatch(A.todoSetItems({items: data}));
+                dispatch(A.todoSetItems({ items: data }));
             })
-            .then(done)
-        ;
-    }
+            .then(done);
+    },
 });
 
 const updateTextLogic = createLogic({
     type: C.TODO_SAVE_TEXT,
-    process({getState, action}, dispatch, done) {
+    process({ getState, action }, dispatch, done) {
         const state = getState();
         const id = action.payload.id;
-        const text = get(getList(state), [id, 'text'], '');
+        const text = get(getList(state), [id, "text"], "");
 
         service
             .updateText(id, text)
@@ -111,20 +104,18 @@ const updateTextLogic = createLogic({
                 response.data.data.forEach(e => {
                     data[e.id] = e;
                 });
-                dispatch(A.todoSetItems({items: data}));
+                dispatch(A.todoSetItems({ items: data }));
             })
             .then(done);
-    }
+    },
 });
 
 const deleteTodoLogic = createLogic({
     type: C.TODO_DELETE,
-    process({getState, action}, dispatch, done) {
+    process({ getState, action }, dispatch, done) {
         const id = action.payload.id;
-        service
-            .delete(id)
-            .then(done);
-    }
+        service.delete(id).then(done);
+    },
 });
 
 export default [
@@ -135,4 +126,4 @@ export default [
     setUnFavorite,
     updateTextLogic,
     deleteTodoLogic,
-]
+];

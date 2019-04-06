@@ -1,12 +1,21 @@
-import {makeActionCreator} from "../../../utils";
+import { makeActionCreator } from "../../../utils";
 import C from "../constants/todo.constants";
-import {IToDoActions} from "../types";
+import { IToDoActions } from "../types";
 
 const todoSetDone: Function = makeActionCreator(C.TODO_SET_DONE, "payload");
-const todoSetUnDone: Function = makeActionCreator(C.TODO_SET_UN_DONE, "payload");
+const todoSetUnDone: Function = makeActionCreator(
+    C.TODO_SET_UN_DONE,
+    "payload"
+);
 
-const todoSetFavorite: Function = makeActionCreator(C.TODO_SET_FAVORITE, "payload");
-const todoSetUnFavorite: Function = makeActionCreator(C.TODO_SET_UN_FAVORITE, "payload");
+const todoSetFavorite: Function = makeActionCreator(
+    C.TODO_SET_FAVORITE,
+    "payload"
+);
+const todoSetUnFavorite: Function = makeActionCreator(
+    C.TODO_SET_UN_FAVORITE,
+    "payload"
+);
 
 const initTodoList: Function = makeActionCreator(C.TODO_INIT, "payload");
 
@@ -33,7 +42,7 @@ const actions: IToDoActions = {
     todoSelect,
     todoSetText,
     todoSaveText,
-    todoDelete
+    todoDelete,
 };
 
 export default actions;
