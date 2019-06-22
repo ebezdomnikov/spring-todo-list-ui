@@ -37,6 +37,9 @@ export interface MainContainerProps {
     hasUnDoneItems: boolean;
     actions: IToDoActions;
 }
+export interface MainContainerState {
+    hiddenDone: boolean;
+}
 
 export interface TaskListContainerProps extends TaskListComponentProps {
     list?: Array<TaskType>;
@@ -45,6 +48,7 @@ export interface TaskListContainerProps extends TaskListComponentProps {
 
 export interface IToDoActions {
     initTodoList: Function;
+    todoAdd: Function;
     todoSetDone: Function;
     todoSetUnDone: Function;
     todoSetFavorite: Function;

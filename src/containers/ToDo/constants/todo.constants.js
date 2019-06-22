@@ -1,3 +1,4 @@
+export const TODO_ADD = "TODO_ADD";
 export const TODO_SET_DONE = "TODO_SET_DONE";
 export const TODO_SET_UN_DONE = "TODO_SET_UN_DONE";
 export const TODO_SET_FAVORITE = "TODO_SET_FAVORITE";
@@ -15,6 +16,7 @@ export const TODO_INIT = "TODO_INIT";
 export const TODO_DELETE = "TODO_DELETE";
 
 export default {
+    TODO_ADD,
     TODO_SET_DONE,
     TODO_SET_UN_DONE,
     TODO_SET_FAVORITE,

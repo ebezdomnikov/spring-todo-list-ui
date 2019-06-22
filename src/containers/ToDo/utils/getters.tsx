@@ -6,6 +6,8 @@ import { TaskType } from "../types";
 export const getRoot = (state: any): any => state[STATE_NAME];
 export const getList = (state: any): Array<TaskType> =>
     Object.values(get(getRoot(state), Enum.STATE_ITEMS, {}));
+export const getTask = (state: any, id: string): TaskType =>
+    get(getRoot(state), [Enum.STATE_ITEMS, id], {});
 export const getDoneList = (state: any): Array<TaskType> =>
     getList(state).filter((t: TaskType) => t.done === true);
 export const getUnDoneList = (state: any): Array<TaskType> =>
@@ -24,6 +26,7 @@ export default {
     getList,
     getEditId,
     getSelectedId,
+    getTask,
     hasDoneItems,
     hasUnDoneItems,
 };

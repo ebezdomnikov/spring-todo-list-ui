@@ -1,7 +1,11 @@
 import * as React from "react";
+import classNames from "classnames";
+import isFunction from "lodash/isFunction";
+
+import { withStyles } from "@material-ui/core";
+
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
-import classNames from "classnames";
 import IconFavorite from "@material-ui/icons/Favorite";
 import IconUnFavorite from "@material-ui/icons/FavoriteBorder";
 import Paper from "@material-ui/core/Paper";
@@ -9,10 +13,9 @@ import TextField from "@material-ui/core/TextField";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import { TaskComponentProps } from "../types";
-import { withStyles } from "@material-ui/core";
-import isFunction from "lodash/isFunction";
 import ConfirmDialog from "./ConfirmDialog";
+
+import { TaskComponentProps } from "../types";
 
 const stylesContainer = {
     minHeight: "48px",
@@ -23,8 +26,8 @@ const stylesContainer = {
 };
 
 const styles = {
-    deleting: {
-        backgroundColor: "red",
+    focused: {
+        backgroundColor: "#EDE7E7",
     },
     container: stylesContainer,
     containerSelected: {
@@ -33,6 +36,9 @@ const styles = {
     },
     text: {
         lineHeight: "48px",
+    },
+    doneText: {
+        textDecoration: "line-through",
     },
     favorite: {
         cursor: "pointer",
@@ -197,7 +203,7 @@ class Task extends React.Component<TaskComponentProps, any> {
         } = this.state;
         const className = classNames(
             selected ? classes.containerSelected : classes.container,
-            focused && Boolean(menuE1) && classes.deleting
+            focused ? classes.focused : ""
         );
 
         return (
@@ -226,7 +232,10 @@ class Task extends React.Component<TaskComponentProps, any> {
                         </div>
                         <div
                             onMouseUp={this._handleMouseUp}
-                            className={classes.text}
+                            className={classNames(
+                                classes.text,
+                                done ? classes.doneText : ""
+                            )}
                         >
                             {edit ? (
                                 <TextField

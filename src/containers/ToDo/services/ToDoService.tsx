@@ -29,6 +29,9 @@ class ToDoService extends BaseService<ToDoServiceResponse> {
     updateText(id: string, text: string) {
         return this._post(`todos/${id}`, { text: text });
     }
+    create(id: string, text: string) {
+        return this._post(`todos`, { id, text, done: false, favorite: false });
+    }
 
     delete(id: string) {
         return this._delete(`todos/${id}`);

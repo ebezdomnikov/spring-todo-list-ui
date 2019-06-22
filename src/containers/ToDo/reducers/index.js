@@ -2,6 +2,7 @@ import omit from "lodash/omit";
 import { createReducer } from "../../../utils";
 import * as Enum from "../constants/enum";
 import C from "../constants/todo.constants";
+import { DefaultTaskType } from "../types";
 
 export const STATE_NAME = "todo";
 
@@ -93,7 +94,22 @@ const todoDelete = (state, { payload: { id } }) => ({
     [Enum.STATE_ITEMS]: omit(state[Enum.STATE_ITEMS], id),
 });
 
+const addTodo = (state, { payload: { id, value } }) => {
+    return {
+        ...state,
+        [Enum.STATE_ITEMS]: {
+            ...state[Enum.STATE_ITEMS],
+            [id]: {
+                ...DefaultTaskType,
+                id,
+                text: value,
+            },
+        },
+    };
+};
+
 const ToDoReducer = createReducer(initialState, {
+    [C.TODO_ADD]: addTodo,
     [C.TODO_SET_DONE]: setDone,
     [C.TODO_SET_UN_DONE]: setUnDone,
     [C.TODO_SET_FAVORITE]: setFavorite,

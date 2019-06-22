@@ -30,7 +30,10 @@ const todoSaveText: Function = makeActionCreator(C.TODO_SAVE_TEXT, "payload");
 
 const todoDelete: Function = makeActionCreator(C.TODO_DELETE, "payload");
 
+const todoAdd: Function = makeActionCreator(C.TODO_ADD, "payload");
+
 const actions: IToDoActions = {
+    todoAdd,
     initTodoList,
     todoSetDone,
     todoSetUnDone,

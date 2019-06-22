@@ -174,25 +174,10 @@ class Layout extends React.Component {
                             onClick={this.navigateTo("/inbox1")}
                         >
                             <ListItemIcon>
-                                <InboxIcon />
+                                <MailIcon />
                             </ListItemIcon>
                             <ListItemText primary={"Inbox1"} />
                         </ListItem>
-                    </List>
-                    <Divider />
-                    <List>
-                        {["All mail", "Trash", "Spam"].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? (
-                                        <InboxIcon />
-                                    ) : (
-                                        <MailIcon />
-                                    )}
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
                     </List>
                 </Drawer>
                 <main className={classes.content}>

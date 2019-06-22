@@ -110,6 +110,15 @@ const updateTextLogic = createLogic({
     },
 });
 
+const createNewLogic = createLogic({
+    type: C.TODO_ADD,
+    process({ getState, action }, dispatch, done) {
+        const id = action.payload.id;
+        const text = action.payload.value;
+        service.create(id, text).then(done);
+    },
+});
+
 const deleteTodoLogic = createLogic({
     type: C.TODO_DELETE,
     process({ getState, action }, dispatch, done) {
@@ -119,6 +128,7 @@ const deleteTodoLogic = createLogic({
 });
 
 export default [
+    createNewLogic,
     getAllData,
     setDone,
     setUnDone,
